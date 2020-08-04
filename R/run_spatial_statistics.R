@@ -5,12 +5,14 @@
 possible_samples <- c("H0351_1009", "H0351_1012", "H0351_1015", "H0351_1016", "H0351_2001", "H0351_2002")
 possible_ftd_genes <- c("FA","MD", "DAb", "ODIp", "ODIs", "ODItot", "ODIWN", "Vin", "VinWN", "Viso", "VisoWN")
 
-dsource <- "CT"
+##options: CT or SSMI
+dsource <- "SSMI"
+ct_adjust <- T
 
 remotely <- T
 sid <- ""
 
-#read comman line
+#read command line
 args = commandArgs(trailingOnly=TRUE)
 for (ar in args){
   tok = strsplit(ar, split="=")[[1]]
