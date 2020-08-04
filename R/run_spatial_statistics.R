@@ -1,8 +1,11 @@
-#! /usr/local/bin/Rscript
+#! /home/aaltmann/bin/R-3.6.2/bin/Rscript
+## /usr/local/bin/Rscript
 #This is a wrapper script for spatial_statistics.R
 
 possible_samples <- c("H0351_1009", "H0351_1012", "H0351_1015", "H0351_1016", "H0351_2001", "H0351_2002")
-possible_ftd_genes <- c("FA","MD")
+possible_ftd_genes <- c("FA","MD", "DAb", "ODIp", "ODIs", "ODItot", "ODIWN", "Vin", "VinWN", "Viso", "VisoWN")
+
+dsource <- "CT"
 
 remotely <- T
 sid <- ""
@@ -31,4 +34,4 @@ for (ar in args){
   }
 }
 
-source("./spatial_statistics.R")
+source("./spatial_statistics_SSMI.R")
