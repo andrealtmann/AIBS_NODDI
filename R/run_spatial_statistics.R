@@ -2,7 +2,7 @@
 #This is a wrapper script for spatial_statistics.R
 
 possible_samples <- c("H0351_1009", "H0351_1012", "H0351_1015", "H0351_1016", "H0351_2001", "H0351_2002")
-possible_ftd_genes <- c("FA","MD")
+possible_ftd_genes <- c("DAb","FA","MD","ODIWN","ODIp","ODIs","ODItot","Vin","VinWN","Viso","VisoWN")
 
 remotely <- T
 sid <- ""

@@ -97,7 +97,12 @@ GE_file <- feather("~/work/Data/AIBS/GE.feather")
 GE <- as.data.frame(GE_file)
 rownames(GE) <- GE[,"probe_id"]
 
+CT_file <- "../data/scaden_predictions_ssmi.txt"
+CT <- t(read.table(CT_file, row.names=1, head=T))
+#print(head(CT))
+
 ofname <- paste("../results/results_rankcor_", ftd_gene, "_", sid_str, "_knn", knn_set, "_geo",tmp, ".csv", sep="")
+ofname2 <- paste("../results/results_CT_rankcor_", ftd_gene, "_", sid_str, "_knn", knn_set, "_geo",tmp, ".csv", sep="")
 
 ### main ###
 #simplest model: rank-correlation between gene expression and imaging value
@@ -142,6 +147,7 @@ aibs.mem <- mem(mylistw)
 
 ## select genetics data
 GEuse <- GE[paste(probe_info$probe_id), paste(sample_info2$well_id)]
+CTuse <- CT[, paste(sample_info2$well_id)]
 
 ## select imaging data
 imgv <- img_vals[paste(sample_info2$well_id),"original"]
@@ -149,9 +155,9 @@ imgv <- img_vals[paste(sample_info2$well_id),"original"]
 my_df <- data.frame(imgv, sampleID=sample_info2$sampleID, aibs.mem)
 
 
-message('WARNING: dummy run: only the first 10 probes processed')
+message('WARNING: dummy run: only the first 5 probes processed')
 message('uncomment next block to run the script for all probes')
-result <- t(apply(head(GEuse,10), 1, function(gg){
+result <- t(apply(head(GEuse,5), 1, function(gg){
   adj.test.screen(gg, my_df, model_str, max_mem)
 }))
 
@@ -161,9 +167,16 @@ result <- t(apply(head(GEuse,10), 1, function(gg){
 #  adj.test.screen(gg, my_df, model_str, max_mem)
 #}))
 
+result_ct <- t(apply(CTuse, 1, function(gg){
+  adj.test.screen(gg, my_df, model_str, max_mem)
+}))
+
 pinfo <- probe_info[rownames(result),c("probe_name","gene_symbol")]
 result <- data.frame(pinfo, result)
 colnames(result) <- c("Probe","Gene","T","P","moranP","nMEM")
 
 message("writing results to: ", ofname)
-write.csv(result, ofname)
+#write.csv(result, ofname)
+
+colnames(result_ct) <- c("T","P","moranP","nMEM")
+write.csv(result_ct, ofname2)
