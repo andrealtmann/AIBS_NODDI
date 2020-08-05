@@ -188,15 +188,15 @@ my_df <- data.frame(imgv, sampleID=sample_info2$sampleID, CTuse, aibs.mem)
 
 #message('WARNING: dummy run: only the first 10 probes processed')
 #message('uncomment next block to run the script for all probes')
-result <- t(apply(head(GEuse,10), 1, function(gg){
-  adj.test.screen(gg, my_df, model_str, max_mem)
-}))
+#result <- t(apply(head(GEuse,10), 1, function(gg){
+#  adj.test.screen(gg, my_df, model_str, max_mem)
+#}))
 
 ####### USE THIS FOR THE REAL ANALYSIS #######
 #that's the actual run!
-#result <- t(apply(GEuse, 1, function(gg){
-#  adj.test.screen(gg, my_df, model_str, max_mem)
-#}))
+result <- t(apply(GEuse, 1, function(gg){
+  adj.test.screen(gg, my_df, model_str, max_mem)
+}))
 
 pinfo <- probe_info[rownames(result),c("probe_name","gene_symbol")]
 #result <- data.frame(pinfo, result)
